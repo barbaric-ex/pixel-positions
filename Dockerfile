@@ -1,6 +1,6 @@
 FROM php:8.4-cli
 
-# System dependencies + PHP extensions
+# System dependencies + PHP extensions + Node.js (ZA VITE)
 RUN apt-get update && apt-get install -y \
     unzip \
     zip \
@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     git \
     libsqlite3-dev \
     libzip-dev \
+    nodejs \
+    npm \
     && docker-php-ext-install pdo pdo_sqlite zip
 
 # Working directory
@@ -21,8 +23,12 @@ RUN curl -fsSL https://getcomposer.org/installer | php -- \
     --install-dir=/usr/local/bin \
     --filename=composer
 
-# Install dependencies
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Install Node dependencies + build Vite assets
+RUN npm install
+RUN npm run build
 
 # Permissions for Laravel
 RUN chmod -R 775 storage bootstrap/cache
@@ -30,5 +36,5 @@ RUN chmod -R 775 storage bootstrap/cache
 # Expose Render port
 EXPOSE 10000
 
-# IMPORTANT: serve /public folder (fix for 404 issue)
+# Start Laravel server
 CMD php -S 0.0.0.0:10000 -t public
