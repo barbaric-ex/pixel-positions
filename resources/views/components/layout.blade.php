@@ -16,7 +16,7 @@
         <nav class="flex justify-between items-center py-4 border-b border-white/10">
             <div>
                 <a href="/">
-                   <img src="/images/logo.svg" alt="Pixel Positions Logo">
+                  <h1 class="text-2xl font-bold">Pixel Positions</h1>
                 </a>
             </div>
 
