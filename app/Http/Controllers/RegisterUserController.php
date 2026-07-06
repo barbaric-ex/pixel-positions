@@ -9,11 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class RegisterUserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-
-    /**
-     * Show the form for creating a new resource.
+     * Show the registration form.
      */
     public function create()
     {
@@ -21,7 +17,7 @@ class RegisterUserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
      */
     public function store(Request $request)
     {
@@ -38,7 +34,12 @@ class RegisterUserController extends Controller
 
         $user = User::create($userAttributes);
 
-        $logoPath = $request->logo->store('logos');
+        // Spremi logo u public/logos
+        $filename = $request->file('logo')->hashName();
+
+        $request->file('logo')->move(public_path('logos'), $filename);
+
+        $logoPath = 'logos/' . $filename;
 
         $user->employer()->create([
             'name' => $employerAttributes['employer'],
@@ -48,6 +49,5 @@ class RegisterUserController extends Controller
         Auth::login($user);
 
         return redirect('/');
-
     }
 }
