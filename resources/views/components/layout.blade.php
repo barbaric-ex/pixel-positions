@@ -20,12 +20,12 @@
                 </a>
             </div>
 
-            <div class="space-x-6 font-bold">
-                <a href="#">Jobs</a>
-                <a href="#">Careers</a>
-                <a href="#">Salaries</a>
-                <a href="#">Companies</a>
-            </div>
+           <div class="hidden md:flex md:space-x-6 font-bold">
+    <a href="#">Jobs</a>
+    <a href="#">Careers</a>
+    <a href="#">Salaries</a>
+    <a href="#">Companies</a>
+</div>
 
             @auth
                 <div class="flex space-x-6 font-bold">
